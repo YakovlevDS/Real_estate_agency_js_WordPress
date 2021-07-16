@@ -17,9 +17,7 @@
     <header class="header header--fixed">
       <div class="container">
         <div class="header__inner">
-          <a href="#" class="header__logo">
-            <img src="<?php echo get_template_directory_uri()?>/images/logo.svg" alt="logo" />
-          </a>
+          <?php the_custom_logo();?>
           <nav class="menu">
             <ul class="menu__list">
               <li class="menu__list-item">
@@ -39,7 +37,7 @@
               </li>
             </ul>
           </nav>
-          <a class="header__phone" href="tel:88002003040">8&nbsp;800&nbsp;200&nbsp;30&nbsp;40</a>
+          <a class="header__phone" href="tel:<?php the_field('main_tel_number')?>"><?php the_field('main_tel_number')?></a>
           <button class="header__button" type="submit">
             <img src="<?php echo get_template_directory_uri()?>/images//burger.svg" alt="icon-burger" />
           </button>
@@ -52,8 +50,8 @@
         <div class="container">
           <div class="hero-wrapper">
             <div class="hero__info">
-              <h1 class="hero__info-title">Подбераем жилую или коммерческую недвижимость <span>в&nbsp;Казани</span> за 3 дня по вашим параметрам</h1>
-              <p class="hero__info-text">К нам обращаются, когда нужно найти квартиру, комнату или офис в&nbsp;сжатые сроки по&nbsp;узким&nbsp;критериям</p>
+              <h1 class="hero__info-title"><?php the_field('main_title')?></h1>
+              <p class="hero__info-text"><?php the_field('main_description')?></p>
               <ul class="hero__info-tags">
                 <li class="hero__info-tag">
                   <a href="#">квартиры в аренду</a>
@@ -73,7 +71,7 @@
               </ul>
             </div>
             <div class="hero__img-wrapper">
-              <img class="hero__img" src="<?php echo get_template_directory_uri()?>/images/main-image.jpg" alt="image" />
+              <img class="hero__img" src="<?php the_field('main_image')?>" alt="image" />
             </div>
           </div>
         </div>
@@ -85,66 +83,47 @@
             <a href="#" class="flats__link">смотреть все квартиры</a>
           </div>
           <div class="cards">
-            <div class="cards-item">
+
+          <?php		
+          global $post;
+
+          $query = new WP_Query( [
+          'posts_per_page' => 4,
+          'category_name' => 'buildings',
+          ] );
+
+          if ( $query->have_posts() ) {
+          while ( $query->have_posts() ) {
+          $query->the_post();
+          ?>
+          <div class="cards-item">
               <div class="cards-item__wrapper">
                 <button class="cards-item__heart"></button>
                 <a href="#" class="cards__item">
-                  <img src="<?php echo get_template_directory_uri()?>/images/flat-1.png" alt="flat-1" class="cards__item-img" />
+                  <img src="<?php echo get_the_post_thumbnail_url();?>" alt="flat-1" class="cards__item-img" />
                   <div class="cards__item-info">
-                    <span class="cards__item-tag">семейный</span>
-                    <span class="cards__item-name">3-комн. кв., 118&nbsp;м², 3/23 этаж</span>
-                    <span class="cards__item-house">ЖК «Манхэттен»</span>
-                    <span class="cards__item-price">11 121 363 ₽</span>
-                    <p class="cards__item-description">Аметьево — 16 минут пешком тракт Оренбургский, 8Д</p>
+                    <span class="cards__item-tag"><?php print_r(get_the_tags()[0]->name) ?></span>
+                    <span class="cards__item-name"><?php the_title() ?></span>
+                    <span class="cards__item-house"><?php the_field('zhk') ?></span>
+                    <span class="cards__item-price"><?php the_field('price') ?></span>
+                    <p class="cards__item-description"><?php echo get_the_excerpt(); ?></p>
                   </div>
                 </a>
               </div>
             </div>
-            <div class="cards-item">
-              <div class="cards-item__wrapper">
-                <button class="cards-item__heart"></button>
-                <a href="#" class="cards__item">
-                  <img src="<?php echo get_template_directory_uri()?>/images/flat-2.png" alt="flat-1" class="cards__item-img" />
-                  <div class="cards__item-info">
-                    <span class="cards__item-tag cards__item-tag--blue">бизнес-класс</span>
-                    <span class="cards__item-name">3-комн. кв., 118&nbsp;м², 3/23 этаж</span>
-                    <span class="cards__item-house">ЖК «Манхэттен»</span>
-                    <span class="cards__item-price">11 121 363 ₽</span>
-                    <p class="cards__item-description">Аметьево — 16 минут пешком тракт Оренбургский, 8Д</p>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="cards-item">
-              <div class="cards-item__wrapper">
-                <button class="cards-item__heart"></button>
-                <a href="#" class="cards__item">
-                  <img src="<?php echo get_template_directory_uri()?>/images/flat-3.png" alt="flat" class="cards__item-img" />
-                  <div class="cards__item-info">
-                    <span class="cards__item-tag">семейный</span>
-                    <span class="cards__item-name">3-комн. кв., 118&nbsp;м², 3/23 этаж</span>
-                    <span class="cards__item-house">ЖК «Манхэттен»</span>
-                    <span class="cards__item-price">11 121 363 ₽</span>
-                    <p class="cards__item-description">Аметьево — 16 минут пешком тракт Оренбургский, 8Д</p>
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div class="cards-item">
-              <div class="cards-item__wrapper">
-                <button class="cards-item__heart"></button>
-                <a href="#" class="cards__item">
-                  <img src="<?php echo get_template_directory_uri()?>/images/flat-4.png" alt="flat" class="cards__item-img" />
-                  <div class="cards__item-info">
-                    <span class="cards__item-tag cards__item-tag--pink">апартаменты</span>
-                    <span class="cards__item-name">2-комн. кв., 107&nbsp;м², 23/23 этаж</span>
-                    <span class="cards__item-house">ЖК «Манхэттен»</span>
-                    <span class="cards__item-price">13 121 363 ₽</span>
-                    <p class="cards__item-description">Аметьево — 16 минут пешком тракт Оренбургский, 8Д</p>
-                  </div>
-                </a>
-              </div>
-            </div>
+          <?php 
+          }
+          } else {
+          // Постов не найдено
+          }
+
+wp_reset_postdata(); // Сбрасываем $post
+?>
+
+
+           
+           
+            
           </div>
         </div>
       </section>
@@ -152,42 +131,39 @@
         <div class="container">
           <h2 class="reviews__title">Что говорят наши клиенты</h2>
           <div class="reviews-wrapper">
-            <div class="reviews-item">
+
+          <?php		
+global $post;
+
+$query = new WP_Query( [
+	'posts_per_page' => 10,
+  'post_type'       => 'reviews',
+] );
+
+if ( $query->have_posts() ) {
+	while ( $query->have_posts() ) {
+		$query->the_post();
+		?>
+		<div class="reviews-item">
               <div class="reviews-item__top">
-                <img src="<?php echo get_template_directory_uri()?>/images/client-1.png" alt="avatar" class="reviews-item__avatar" />
+                <img src="<?php echo get_the_post_thumbnail_url()?>" alt="avatar" class="reviews-item__avatar" />
                 <div class="reviews-item__info">
-                  <h3 class="reviews-item__title">Через две недели уже&nbsp;вышли на сделку</h3>
-                  <span class="reviews-item__name"> Елена Гловатова </span>
+                  <h3 class="reviews-item__title"><?php echo get_the_excerpt();?></h3>
+                  <span class="reviews-item__name"><?php the_title()?> </span>
                 </div>
               </div>
               <p class="reviews-item__text">
-                Мне нужно было срочно подобрать квартиру для командировок в Казань. Я связалась с агентом, сказала параметры для квартиры и уже через две недели мы вышли на сделку.
+              <?php  the_content();?>
               </p>
             </div>
-            <div class="reviews-item">
-              <div class="reviews-item__top">
-                <img src="<?php echo get_template_directory_uri()?>/images/client-2.png" alt="avatar" class="reviews-item__avatar" />
-                <div class="reviews-item__info">
-                  <h3 class="reviews-item__title">Подобрали именно то, что я так долго искал</h3>
-                  <span class="reviews-item__name"> Евгений Пробухов </span>
-                </div>
-              </div>
-              <p class="reviews-item__text">
-                Мне нужно было срочно подобрать квартиру для командировок в Казань. Я связалась с агентом, сказала параметры для квартиры и уже через две недели мы вышли на сделку.
-              </p>
-            </div>
-            <div class="reviews-item">
-              <div class="reviews-item__top">
-                <img src="<?php echo get_template_directory_uri()?>/images/client-3.jpg" alt="avatar" class="reviews-item__avatar" />
-                <div class="reviews-item__info">
-                  <h3 class="reviews-item__title">Подобрали именно то, что я так долго искал</h3>
-                  <span class="reviews-item__name"> Олег Лебедев </span>
-                </div>
-              </div>
-              <p class="reviews-item__text">
-                Мне нужно было срочно подобрать квартиру для командировок в Казань. Я связалась с агентом, сказала параметры для квартиры и уже через две недели мы вышли на сделку.
-              </p>
-            </div>
+		<?php 
+	}
+} else {
+	// Постов не найдено
+}
+
+wp_reset_postdata(); // Сбрасываем $post
+?>
           </div>
         </div>
       </section>
@@ -206,10 +182,8 @@
       <div class="container">
         <div class="footer-wrapper">
           <div class="footer-info">
-            <a href="#" class="footer__logo">
-              <img src="<?php echo get_template_directory_uri()?>/images/logo.svg" alt="logo" />
-            </a>
-            <p class="footer__text">Мы помогаем подобрать коммерческую или жилую недвижимость в Казани</p>
+          <?php the_custom_logo();?>
+            <p class="footer__text"><?php echo bloginfo('description')?></p>
           </div>
           <nav class="footer-nav">
             <ul class="footer-list">
@@ -262,8 +236,8 @@
             </ul>
           </nav>
           <div class="footer-contacts">
-            <a class="footer__phone" href="tel:88002003040">8&nbsp;800&nbsp;200&nbsp;30&nbsp;40</a>
-            <a href="mailto:info@real-estate.com" class="footer__email">info@real&#8209;estate.com</a>
+            <a class="footer__phone" href="tel:<?php the_field('main_tel_number')?>"><?php the_field('main_tel_number')?></a>
+            <a href="mailto:<?php the_field('main_email')?>" class="footer__email"><?php the_field('main_email')?></a>
           </div>
         </div>
       </div>
