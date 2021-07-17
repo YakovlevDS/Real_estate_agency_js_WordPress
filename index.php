@@ -243,7 +243,7 @@ wp_reset_postdata(); // Сбрасываем $post
       </div>
     </footer>
 
-    <script src="js/main.min.js"></script>
+    
     <?php wp_footer() ?>
   </body>
 </html>
